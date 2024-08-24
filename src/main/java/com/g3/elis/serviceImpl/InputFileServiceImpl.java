@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.g3.elis.config.FileStorageConfig;
 import com.g3.elis.dto.form.UserDto;
+import com.g3.elis.dto.report.CoursePerformance;
 import com.g3.elis.model.InputFile;
 import com.g3.elis.repository.InputFileRepository;
 import com.g3.elis.service.InputFileService;
@@ -53,11 +54,11 @@ public class InputFileServiceImpl implements InputFileService {
 	}
 
 	@Override
-	public void saveFile(MultipartFile file) {
+	public void saveFile(MultipartFile file,String filePath) {
 		InputFile inputFile = new InputFile();
 		inputFile.setFileName(file.getOriginalFilename());
 		try {
-			fileStorageConfig.saveFile(file, file.getOriginalFilename());
+			fileStorageConfig.saveFile(file, file.getOriginalFilename(),filePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -232,6 +233,18 @@ public class InputFileServiceImpl implements InputFileService {
 							}
 							if(getCellValue(formulaEvaluator,cell).contains("25-") || getCellValue(formulaEvaluator,cell).contains("26-"))
 							{
+								if (getCellValue(formulaEvaluator,cell).contains("25-"))
+								{
+									userDto.setGender("Male");
+								}
+								else if(getCellValue(formulaEvaluator,cell).contains("26-"))
+								{
+									userDto.setGender("Female");
+								}
+								else
+								{
+									userDto.setGender("Other");
+								}
 								userDto.setStaffId(getCellValue(formulaEvaluator,cell));
 							}
 							if(getCellValue(formulaEvaluator,cell).contains("Dept"))
@@ -242,10 +255,7 @@ public class InputFileServiceImpl implements InputFileService {
 							{
 								userDto.setEmail(getCellValue(formulaEvaluator,cell));
 							}
-							if(getCellValue(formulaEvaluator,cell).equalsIgnoreCase("Active") || getCellValue(formulaEvaluator,cell).equalsIgnoreCase("InActive"))
-							{
-								userDto.setStatus(getCellValue(formulaEvaluator,cell));
-							}
+							
 							if(getCellValue(formulaEvaluator,row.getCell(3))!=null)
 							{
 								userDto.setName(getCellValue(formulaEvaluator,row.getCell(3)));
@@ -258,6 +268,14 @@ public class InputFileServiceImpl implements InputFileService {
 							{
 								userDto.setTeam(getCellValue(formulaEvaluator,row.getCell(6)));
 							}
+							if(getCellValue(formulaEvaluator,row.getCell(8))!=null)
+							{
+								userDto.setStatus(getCellValue(formulaEvaluator,row.getCell(8)));
+							}
+							if(getCellValue(formulaEvaluator,row.getCell(9))!=null)
+							{
+								userDto.setRole(getCellValue(formulaEvaluator,row.getCell(9)));
+							}
 						}
 					}
 					if(userDto.getName()!=null)
@@ -265,7 +283,7 @@ public class InputFileServiceImpl implements InputFileService {
 						userService.createUser(userDto);
 					}
 				}
-			}
+			}	
 		}
 		workbook.close();
 	}
@@ -312,6 +330,19 @@ public class InputFileServiceImpl implements InputFileService {
 		{
 			return "";
 		}
+	}
+
+	@Override
+	public void generateExcelReportFile(List<CoursePerformance> reportData)
+	{
+		Workbook workbook = new XSSFWorkbook();
+		
+		String sheetName = "Course Performance Report";
+		
+	}
+	private void createSheetsWithData(Workbook workbook,String sheetName,List<CoursePerformance> reportData)
+	{
+		
 	}
 }
 
