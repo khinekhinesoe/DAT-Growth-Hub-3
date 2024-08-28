@@ -19,8 +19,8 @@
 
 					<!-- Top bar left -->
 					<div class="navbar-expand-lg ms-auto ms-xl-0">
-						<a th:href="@{/student/student-view-blog}" class="btn btn-primary">Back
-							To Blog</a>
+						<a th:href="@{/student/student-dashboard}" class="btn btn-primary">Back
+							To Home</a>
 					</div>
 					<!-- Top bar left END -->
 
@@ -166,7 +166,7 @@ Page Banner START -->
 								<div class="d-flex justify-content-center">
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb breadcrumb-dots mb-0">
-											<li class="breadcrumb-item"><a href="@{/student/student-dashboard}">Home</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/student/student-dashboard}">Home</a></li>
 											<li class="breadcrumb-item active" aria-current="page">Courses
 												</li>
 										</ol>
@@ -186,7 +186,7 @@ Page content START -->
 				<div class="container">
 
 					<!-- Filter bar START -->
-					<form
+					<div
 						class="bg-light border p-4 rounded-3 my-4 z-index-9 position-relative">
 						<div class="row g-3">
 							<!-- Input -->
@@ -211,7 +211,7 @@ Page content START -->
 
 						</div>
 						<!-- Row END -->
-					</form>
+					</div>
 					<!-- Filter bar END -->
 
 					<div class="row mt-3">
